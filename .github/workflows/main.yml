@@ -15,7 +15,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Estrai la v2
-        run: unzip -o -q MotionCues-v2.zip -x ".github/*"
+        run: |
+          unzip -o -q MotionCues-v2.zip -x ".github/*"
+          echo "android.useAndroidX=true" >> gradle.properties
 
       - uses: actions/setup-java@v4
         with:
