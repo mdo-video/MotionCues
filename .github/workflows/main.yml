@@ -13,21 +13,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Estrai la v2
+        run: unzip -o -q MotionCues-v2.zip -x ".github/*"
+
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.9
+
       - name: Compila APK
         run: gradle assembleRelease --no-daemon
+
       - name: Prepara file
         run: cp app/build/outputs/apk/release/app-release.apk MotionCues.apk
+
       - uses: actions/upload-artifact@v4
         with:
           name: MotionCues-APK
           path: MotionCues.apk
+
       - name: Pubblica release
         env:
           GH_TOKEN: ${{ github.token }}
